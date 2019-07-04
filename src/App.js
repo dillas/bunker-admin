@@ -1,10 +1,36 @@
 import React from 'react';
 import { Button, Layout, Menu, Icon } from 'antd';
+import { Query } from 'react-apollo';
+import { gql } from 'apollo-boost';
 import logo from './assets/logo-web-admin.svg';
 import logoMin from './assets/logo-web-admin-min.svg';
 import './App.css';
 
 const { Header, Sider, Content } = Layout;
+
+const UsersList = () => (
+  <Query
+    query={gql`{
+      users {
+        id
+        username
+        email
+        role
+      }
+    }`}
+  >
+    {({ loading, error, data }) => {
+      if (loading) return <p>Loading...</p>;
+      if (error) return <p>Error :(</p>;
+
+      return data.users.map(({ id, username, email, role }) => (
+        <div key={id}>
+          <p>{username}: {email} <i>{role}</i></p>
+        </div>
+      ));
+    }}
+  </Query>
+);
 
 class App extends React.Component {
   state = {
@@ -58,6 +84,7 @@ class App extends React.Component {
             }}
           >
             <Button type="primary">Button</Button>
+            <UsersList />
           </Content>
         </Layout>
       </Layout>
