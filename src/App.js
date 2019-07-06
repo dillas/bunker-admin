@@ -1,31 +1,35 @@
 import React from 'react';
-import { Button, Layout, Menu, Icon } from 'antd';
+import { Layout, Menu, Icon } from 'antd';
 import { Query } from 'react-apollo';
-import { gql } from 'apollo-boost';
+import gql from 'graphql-tag';
 import logo from './assets/logo-web-admin.svg';
 import logoMin from './assets/logo-web-admin-min.svg';
 import './App.css';
 
 const { Header, Sider, Content } = Layout;
 
-const UsersList = () => (
-  <Query
-    query={gql`{
-      users {
+const GET_USERS = gql`
+  query GetUsers {
+    users {
         id
         username
         email
         role
-      }
-    }`}
+    }
+  }
+`;
+
+const UsersList = () => (
+  <Query
+    query={GET_USERS}
   >
     {({ loading, error, data }) => {
       if (loading) return <p>Loading...</p>;
-      if (error) return <p>Error :(</p>;
+      if (error) return <p>Error :( ${error.message}</p>;
 
       return data.users.map(({ id, username, email, role }) => (
         <div key={id}>
-          <p>{username}: {email} <i>{role}</i></p>
+          <p><b>{username.toUpperCase()}</b>: {email} {role}</p>
         </div>
       ));
     }}
@@ -49,7 +53,7 @@ class App extends React.Component {
     const logotype = !this.state.collapsed ? logo : logoMin;
 
     return (
-      <Layout>
+      <Layout style={{height:"100vh"}}>
         <Sider trigger={null} collapsible collapsed={this.state.collapsed}>
           <img src={logotype} className="logo" alt="Логотип Бункер-42"/>
           <Menu theme="dark" mode="inline" defaultSelectedKeys={['1']}>
@@ -83,7 +87,6 @@ class App extends React.Component {
               minHeight: 280,
             }}
           >
-            <Button type="primary">Button</Button>
             <UsersList />
           </Content>
         </Layout>
