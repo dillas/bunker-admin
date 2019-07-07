@@ -1,0 +1,13 @@
+.pageLogin .login-form {
+
+}
+.pageLogin .login-form-forgot {
+    float: right;
+}
+.pageLogin .login-form-button {
+    width: 100%;
+}
+.pageLogin .logo {
+    margin: 0 auto 24px;
+    display: block;
+}

@@ -1,7 +1,7 @@
 import React from 'react'
 import './layout.css'
 
-import LoginForm from '../pages/pageLogin'
+import LoginForm from '../pages/PageLogin'
 
 class BlankLayout extends React.Component {
   render () {
