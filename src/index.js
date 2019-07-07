@@ -8,7 +8,9 @@ import { InMemoryCache } from 'apollo-cache-inmemory'
 import { ApolloLink, split } from 'apollo-link'
 import { WebSocketLink } from 'apollo-link-ws'
 import { onError } from 'apollo-link-error'
-import { BrowserRouter } from 'react-router-dom'
+import { Router } from 'react-router-dom'
+
+import history from './constants/history';
 
 import './index.css'
 import App from './App'
@@ -82,9 +84,9 @@ const client = new ApolloClient({
 
 ReactDOM.render(
   <ApolloProvider client={client}>
-    <BrowserRouter>
+    <Router history={history}>
       <App />
-    </BrowserRouter>
+    </Router>
   </ApolloProvider>
   , document.getElementById('root'))
 

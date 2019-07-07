@@ -1,14 +1,15 @@
 import React from 'react'
-import './layout.css'
+import { Route } from 'react-router-dom'
 
-import LoginForm from '../pages/PageLogin'
-
-class BlankLayout extends React.Component {
-  render () {
-    return (
-      <LoginForm/>
-    )
-  }
-}
+const BlankLayout = ({component: Component, ...rest}) => {
+  return (
+    <Route {...rest} render={matchProps => (
+      <div className="BlankLayout">
+        <Component {...matchProps} />
+      </div>
+    )} />
+  )
+};
 
 export default BlankLayout
+
