@@ -1,61 +1,28 @@
-import React from 'react';
-import { Layout, Menu, Icon } from 'antd';
-import { Query } from 'react-apollo';
-import gql from 'graphql-tag';
-import logo from './assets/logo-web-admin.svg';
-import logoMin from './assets/logo-web-admin-min.svg';
-import './App.css';
+import React from 'react'
+import { Layout, Menu, Icon } from 'antd'
+import './App.css'
 
-const { Header, Sider, Content } = Layout;
+import UsersList from './components/UsersList'
+import Logotype from './components/Logotype'
 
-const GET_USERS = gql`
-  query GetUsers {
-    users {
-        id
-        username
-        email
-        role
-    }
-  }
-`;
-
-const UsersList = () => (
-  <Query
-    query={GET_USERS}
-  >
-    {({ loading, error, data }) => {
-      if (loading) return <p>Loading...</p>;
-      if (error) return <p>Error :( ${error.message}</p>;
-
-      return data.users.map(({ id, username, email, role }) => (
-        <div key={id}>
-          <p><b>{username.toUpperCase()}</b>: {email} {role}</p>
-        </div>
-      ));
-    }}
-  </Query>
-);
+const { Header, Sider, Content } = Layout
 
 class App extends React.Component {
   state = {
-    collapsed: false,
-  };
+    sideBarCollapsed: false,
+  }
 
   toggle = () => {
     this.setState({
-      collapsed: !this.state.collapsed,
-    });
-  };
-
+      sideBarCollapsed: !this.state.sideBarCollapsed,
+    })
+  }
 
   render() {
-
-    const logotype = !this.state.collapsed ? logo : logoMin;
-
     return (
       <Layout style={{height:"100vh"}}>
-        <Sider trigger={null} collapsible collapsed={this.state.collapsed}>
-          <img src={logotype} className="logo" alt="Логотип Бункер-42"/>
+        <Sider trigger={null} collapsible collapsed={this.state.sideBarCollapsed}>
+          <Logotype collapsed={this.state.sideBarCollapsed} />
           <Menu theme="dark" mode="inline" defaultSelectedKeys={['1']}>
             <Menu.Item key="1">
               <Icon type="user" />
@@ -75,7 +42,7 @@ class App extends React.Component {
           <Header style={{ background: '#fff', padding: 0 }}>
             <Icon
               className="trigger"
-              type={this.state.collapsed ? 'menu-unfold' : 'menu-fold'}
+              type={this.state.sideBarCollapsed ? 'menu-unfold' : 'menu-fold'}
               onClick={this.toggle}
             />
           </Header>
@@ -91,8 +58,8 @@ class App extends React.Component {
           </Content>
         </Layout>
       </Layout>
-    );
+    )
   }
 }
 
-export default App;
+export default App
