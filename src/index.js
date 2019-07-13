@@ -8,9 +8,6 @@ import { InMemoryCache } from 'apollo-cache-inmemory'
 import { ApolloLink, split } from 'apollo-link'
 import { WebSocketLink } from 'apollo-link-ws'
 import { onError } from 'apollo-link-error'
-import { Router } from 'react-router-dom'
-
-import history from './constants/history';
 
 import './index.css'
 import App from './App'
@@ -55,10 +52,10 @@ const authLink = new ApolloLink((operation, forward) => {
 
 const errorLink = onError(({ graphQLErrors, networkError }) => {
   if (graphQLErrors) {
-    graphQLErrors.forEach(({ message }) => {
+    graphQLErrors.forEach(({ message, extensions }) => {
       console.log('GraphQL error', message)
 
-      if (message === 'UNAUTHENTICATED') {
+      if (extensions.code === 'UNAUTHENTICATED') {
         signOut(client)
       }
     })
@@ -84,9 +81,7 @@ const client = new ApolloClient({
 
 ReactDOM.render(
   <ApolloProvider client={client}>
-    <Router history={history}>
       <App />
-    </Router>
   </ApolloProvider>
   , document.getElementById('root'))
 
