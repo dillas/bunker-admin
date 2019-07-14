@@ -9,7 +9,7 @@ import { ApolloLink, split } from 'apollo-link'
 import { WebSocketLink } from 'apollo-link-ws'
 import { onError } from 'apollo-link-error'
 
-import './index.css'
+import './index.less'
 import App from './App'
 import { signOut } from './components/SignOut'
 import * as serviceWorker from './serviceWorker'

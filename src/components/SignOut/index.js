@@ -1,15 +1,15 @@
-import React from 'react';
-import { ApolloConsumer } from 'react-apollo';
+import React from 'react'
+import { ApolloConsumer } from 'react-apollo'
 
-import * as routes from '../../constants/routes';
-import history from '../../constants/history';
+import * as routes from '../../constants/routes'
+import history from '../../constants/history'
 
 const SignOutButton = () => (
   <ApolloConsumer>
     {client => (
-      <button type="button" onClick={() => signOut(client)}>
+      <span onClick={() => signOut(client)}>
         Sign Out
-      </button>
+      </span>
     )}
   </ApolloConsumer>
 );

@@ -63,7 +63,7 @@ class SignInForm extends Component {
       <Mutation mutation={SIGN_IN} variables={{ login, password }}>
         {(signIn, { data, loading, error }) => (
           <Row className='pageLogin' style={{height:"100vh"}} type="flex" justify="space-around" align="middle">
-            <Col span={5}>
+            <Col xs={20} sm={12} md={8} lg={6} xl={5}>
               <Logotype theme='dark' />
               <Form onSubmit={event => this.onSubmit(event, signIn)} className="login-form">
                 <Form.Item>

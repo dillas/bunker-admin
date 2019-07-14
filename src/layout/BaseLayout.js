@@ -1,10 +1,11 @@
 import React from 'react'
 import { Layout, Menu, Icon } from 'antd'
-import './layout.css'
-import { Route } from 'react-router-dom'
+import './layout.less'
+import { Link, Route } from 'react-router-dom'
 
 import Logotype from '../components/Logotype'
 import Navigation from '../components/Navigation'
+import * as routes from '../constants/routes'
 
 const { Header, Sider, Content } = Layout
 
@@ -40,15 +41,31 @@ class BaseLayout extends React.Component {
                 <span>nav 3</span>
               </Menu.Item>
             </Menu>
-            <Navigation session={session} />
           </Sider>
           <Layout>
-            <Header style={{ background: '#fff', padding: 0 }}>
+            <Header style={{ background: '#fff', padding: 0, display: 'flex' }}>
               <Icon
                 className="trigger"
                 type={this.state.sideBarCollapsed ? 'menu-unfold' : 'menu-fold'}
                 onClick={this.toggle}
               />
+              <Menu onClick={this.handleClick} selectedKeys={[this.state.current]} mode="horizontal">
+                <Menu.Item key="museum">
+                  <Link to={routes.LANDING}>Museum</Link>
+                </Menu.Item>
+                <Menu.Item key="restaurant">
+                  <Link to={routes.LANDING}>Restaurant</Link>
+                </Menu.Item>
+                <Menu.Item key="games">
+                  <Link to={routes.LANDING}>Games</Link>
+                </Menu.Item>
+                <Menu.Item key="planet">
+                  <Link to={routes.LANDING}>Planet</Link>
+                </Menu.Item>
+              </Menu>
+              <div className='rightContainer'>
+                <Navigation session={session} />
+              </div>
             </Header>
             <Content
               style={{
